@@ -7,12 +7,14 @@ import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RecipeListComponent } from './components/recipe-list/recipe-list.component';
 import { RecipeSummaryComponent } from './components/recipe-summary/recipe-summary.component';
+import { RecipeDetailsComponent } from './components/recipe-details/recipe-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RecipeListComponent,
-    RecipeSummaryComponent
+    RecipeSummaryComponent,
+    RecipeDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -22,6 +24,10 @@ import { RecipeSummaryComponent } from './components/recipe-summary/recipe-summa
       {
         path: 'recipes',
         component: RecipeListComponent
+      },
+      {
+        path: 'recipes/:recipe_id',
+        component: RecipeDetailsComponent
       },
       {
         path: '',
