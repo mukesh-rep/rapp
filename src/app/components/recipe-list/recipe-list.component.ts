@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
+
 import { Router } from '@angular/router';
 
-import { Recipe } from 'src/app/model/recipe';
+import { Recipe } from '../../model/recipe';
+
+
 
 @Component({
   selector: 'app-recipe-list',
@@ -9,14 +12,19 @@ import { Recipe } from 'src/app/model/recipe';
   styleUrls: ['./recipe-list.component.css']
 })
 export class RecipeListComponent {
+
+  current_classes: any;
+
+current_styles: any;
+
+recipes: Recipe[];
+
   recipe_in_progress: Recipe;
-  recipes: Recipe[];
-  current_css_classes = {
-    darkbg: false
-  };
+
   constructor(private router: Router) {
 
-    this.recipe_in_progress = Recipe.createBlank();
+    this.current_classes = { 'darkbg': false };
+    this.current_styles = { 'font-size' : '150%' };
 
     this.recipes = [
       Recipe.recipeFromJSON({
@@ -126,8 +134,10 @@ export class RecipeListComponent {
         ]
       })
   ];
+
   }
-  addRecipeClicked(): void {
+
+  public addRecipeClicked() {
     console.log(JSON.stringify(this.recipe_in_progress, null, 2));
     this.recipes.unshift(this.recipe_in_progress);
     this.recipe_in_progress = Recipe.createBlank();
@@ -137,7 +147,8 @@ export class RecipeListComponent {
     this.router.navigateByUrl('/recipes/' + recipe_id);
   }
 
-  toggleDarkBackground():void{
-    this.current_css_classes.darkbg = !this.current_css_classes.darkbg;
+  addNewRecipePressed(): void {
+    this.router.navigateByUrl('/editnewrecipe');
   }
+
 }

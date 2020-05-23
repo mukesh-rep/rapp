@@ -8,19 +8,25 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RecipeListComponent } from './components/recipe-list/recipe-list.component';
 import { RecipeSummaryComponent } from './components/recipe-summary/recipe-summary.component';
 import { RecipeDetailsComponent } from './components/recipe-details/recipe-details.component';
+import { EditNewRecipeComponent } from './components/edit-new-recipe/edit-new-recipe.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     RecipeListComponent,
     RecipeSummaryComponent,
-    RecipeDetailsComponent
+    RecipeDetailsComponent,
+    EditNewRecipeComponent
   ],
   imports: [
     BrowserModule,
     NgbModule,
     FormsModule,
     RouterModule.forRoot([
+      {
+        path: 'editnewrecipe',
+        component: EditNewRecipeComponent
+      },
       {
         path: 'recipes',
         component: RecipeListComponent
