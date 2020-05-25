@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { faMinusCircle } from '@fortawesome/free-solid-svg-icons';
 
 import { Recipe } from '../../model/recipe';
 import { RecipeService } from '../../services/recipe.service';
@@ -10,7 +11,7 @@ import { RecipeService } from '../../services/recipe.service';
   styleUrls: ['./edit-new-recipe.component.css']
 })
 export class EditNewRecipeComponent implements OnInit {
-
+  faMinusCircle = faMinusCircle;
   recipe_in_progress: Recipe;
 
 
@@ -24,17 +25,17 @@ export class EditNewRecipeComponent implements OnInit {
 
   addIngredientPressed(): void {
     if (!this.recipe_in_progress.ingredients) {
-      this.recipe_in_progress.ingredients = [ { ingredient: null, measure: null } ];
+      this.recipe_in_progress.ingredients = [{ ingredient: null, measure: null }];
     } else {
-      this.recipe_in_progress.ingredients.push({ ingredient: null, measure: null } );
+      this.recipe_in_progress.ingredients.push({ ingredient: null, measure: null });
     }
   }
 
   addInstructionPressed(): void {
     if (!this.recipe_in_progress.instructions) {
-      this.recipe_in_progress.instructions = [ { instruction: null, photo: null } ];
+      this.recipe_in_progress.instructions = [{ instruction: null, photo: null }];
     } else {
-      this.recipe_in_progress.instructions.push({ instruction: null, photo: null } );
+      this.recipe_in_progress.instructions.push({ instruction: null, photo: null });
     }
   }
 
@@ -48,9 +49,9 @@ export class EditNewRecipeComponent implements OnInit {
 
   addRecipeClicked(): void {
     this.recipe_service.addNewRecipe(this.recipe_in_progress)
-        .then((recipe) => {
-          this.router.navigate(['recipes', recipe.id]);
-        });
+      .then((recipe) => {
+        this.router.navigate(['recipes', recipe.id]);
+      });
   }
 
   /*

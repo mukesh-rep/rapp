@@ -12,6 +12,7 @@ import { RecipeDetailsComponent } from './components/recipe-details/recipe-detai
 import { EditNewRecipeComponent } from './components/edit-new-recipe/edit-new-recipe.component';
 
 import { RecipeService } from './services/recipe.service';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { RecipeService } from './services/recipe.service';
         pathMatch: 'full'
       }
     ]),
+    FontAwesomeModule,
   ],
   providers: [RecipeService],
   bootstrap: [AppComponent]

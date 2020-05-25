@@ -25,7 +25,7 @@
           <div class="ingredient" *ngFor="let ingredient of recipe_in_progress.ingredients; let i = index">
               <input type="text" class="form-control" [(ngModel)]="recipe_in_progress.ingredients[i].ingredient" placeholder="Ingredient"/>
               <input type="text" class="form-control" [(ngModel)]="recipe_in_progress.ingredients[i].measure" placeholder="How Much?"/>
-              <a (click)="removeIngredientAtIndex(i)">Remove</a>
+              <a (click)="removeIngredientAtIndex(i)"><fa-icon [icon]="faMinusCircle"></fa-icon></a>
           </div>
           <div class="add-ingredient">
             <input type="button" value='Add' (click)="addIngredientPressed()"/>
@@ -35,14 +35,14 @@
             <label> Instructions </label>
             <div class="instruction" *ngFor="let instruction of recipe_in_progress.instructions; let i = index">
                 <input class="form-control" type="text" [(ngModel)]="recipe_in_progress.instructions[i].instruction" placeholder="What to do?"/>
-                <a (click)="removeInstructionAtIndex(i)">Remove</a>
+                <a (click)="removeInstructionAtIndex(i)"><fa-icon [icon]="faMinusCircle"></fa-icon></a>
             </div>
             <div class="add-instruction">
               <input type="button" value='Add' (click)="addInstructionPressed()"/>
             </div>
           </div>
             <div class="input-group">
-          <input type="button" value="Add Recipe" (click)="addRecipeClicked()"/>
+          <input type="button" class="btn btn-primary" value="Add Recipe" (click)="addRecipeClicked()"/>
       </div>
   </div>
 </div>

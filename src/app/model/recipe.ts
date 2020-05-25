@@ -3,6 +3,16 @@ export interface Ingredient {
     measure: string;
 }
 
+export class RecipesPayload{
+    error: string;
+    data: Recipe [];
+}
+
+export class RecipePayload{
+    error: string;
+    data: Recipe;
+}
+
 export interface Instruction {
     instruction: string;
     photo: string;
