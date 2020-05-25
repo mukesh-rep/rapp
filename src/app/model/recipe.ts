@@ -35,7 +35,7 @@ export class Recipe {
 
     public static recipeFromJSON(obj: any): Recipe {
         return new Recipe(obj.id, obj.title, obj.description, obj.feeds_this_many, obj.preparation_time,
-            obj.ingredients, obj.instructions, obj.cover_photo, obj.keywords);
+                          obj.ingredients, obj.instructions, obj.cover_photo, obj.keywords);
     }
 
     public static createBlank(): Recipe {

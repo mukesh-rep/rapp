@@ -1,14 +1,17 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { HttpClientModule } from '@angular/common/http';
+
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router'
 
 import { AppComponent } from './app.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RecipeListComponent } from './components/recipe-list/recipe-list.component';
 import { RecipeSummaryComponent } from './components/recipe-summary/recipe-summary.component';
 import { RecipeDetailsComponent } from './components/recipe-details/recipe-details.component';
 import { EditNewRecipeComponent } from './components/edit-new-recipe/edit-new-recipe.component';
+
+import { RecipeService } from './services/recipe.service';
 
 @NgModule({
   declarations: [
@@ -20,8 +23,8 @@ import { EditNewRecipeComponent } from './components/edit-new-recipe/edit-new-re
   ],
   imports: [
     BrowserModule,
-    NgbModule,
     FormsModule,
+    HttpClientModule,
     RouterModule.forRoot([
       {
         path: 'editnewrecipe',
@@ -39,9 +42,10 @@ import { EditNewRecipeComponent } from './components/edit-new-recipe/edit-new-re
         path: '',
         redirectTo: '/recipes',
         pathMatch: 'full'
-      }])
+      }
+    ]),
   ],
-  providers: [],
+  providers: [RecipeService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

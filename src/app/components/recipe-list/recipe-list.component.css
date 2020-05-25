@@ -1,16 +1,7 @@
 h1 {
-    font-size: 150%;
-    margin-bottom: 30px;
+    font-size: 160%;
 }
 
-div.newrecipe input {
-    margin-bottom: 10px;
-}
-
-div.newrecipe textarea {
-    margin-bottom: 10px;
-}
-
-.darkbg{
+.darkbg {
     background-color: #aaaaaa;
 }
