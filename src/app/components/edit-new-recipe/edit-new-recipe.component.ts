@@ -13,11 +13,13 @@ import { RecipeService } from '../../services/recipe.service';
 export class EditNewRecipeComponent implements OnInit {
   faMinusCircle = faMinusCircle;
   recipe_in_progress: Recipe;
+  disable_add_recipe_button: boolean;
 
 
   constructor(private recipe_service: RecipeService,
               private router: Router) {
     this.recipe_in_progress = Recipe.createBlank();
+    this.disable_add_recipe_button = true;
   }
 
   ngOnInit() {
@@ -29,6 +31,7 @@ export class EditNewRecipeComponent implements OnInit {
     } else {
       this.recipe_in_progress.ingredients.push({ ingredient: null, measure: null });
     }
+    this.validateForm();
   }
 
   addInstructionPressed(): void {
@@ -37,14 +40,17 @@ export class EditNewRecipeComponent implements OnInit {
     } else {
       this.recipe_in_progress.instructions.push({ instruction: null, photo: null });
     }
+    this.validateForm();
   }
 
   removeIngredientAtIndex(index): void {
     this.recipe_in_progress.ingredients.splice(index, 1);
+    this.validateForm();
   }
 
   removeInstructionAtIndex(index): void {
     this.recipe_in_progress.instructions.splice(index, 1);
+    this.validateForm();
   }
 
   addRecipeClicked(): void {
@@ -54,8 +60,8 @@ export class EditNewRecipeComponent implements OnInit {
       });
   }
 
-  /*
-  validateForm(event): void {
+
+  validateForm(): void {
     this.disable_add_recipe_button = true;
     if (!this.recipe_in_progress.title || this.recipe_in_progress.title.length < 1) {
       return;
@@ -85,7 +91,8 @@ export class EditNewRecipeComponent implements OnInit {
       }
     }
     this.disable_add_recipe_button = false;
+    console.log(this.disable_add_recipe_button);
   }
-  */
+
 
 }
