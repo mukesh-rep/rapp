@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { faMinusCircle } from '@fortawesome/free-solid-svg-icons';
 
 import { Recipe } from '../../model/recipe';
 import { RecipeService } from '../../services/recipe.service';
@@ -11,15 +10,20 @@ import { RecipeService } from '../../services/recipe.service';
   styleUrls: ['./edit-new-recipe.component.css']
 })
 export class EditNewRecipeComponent implements OnInit {
-  faMinusCircle = faMinusCircle;
-  recipe_in_progress: Recipe;
-  disable_add_recipe_button: boolean;
 
+  cover_photo_for_viewing = '/assets/emptybowl.jpg';
+  instruction_photos_for_viewing: string[];
+
+  cover_photo_for_upload: File;
+  instruction_photos_for_upload: File[];
+
+  recipe_in_progress: Recipe;
 
   constructor(private recipe_service: RecipeService,
               private router: Router) {
     this.recipe_in_progress = Recipe.createBlank();
-    this.disable_add_recipe_button = true;
+    this.instruction_photos_for_viewing = [];
+    this.instruction_photos_for_upload = [];
   }
 
   ngOnInit() {
@@ -27,72 +31,67 @@ export class EditNewRecipeComponent implements OnInit {
 
   addIngredientPressed(): void {
     if (!this.recipe_in_progress.ingredients) {
-      this.recipe_in_progress.ingredients = [{ ingredient: null, measure: null }];
+      this.recipe_in_progress.ingredients = [ { ingredient: null, measure: null } ];
     } else {
-      this.recipe_in_progress.ingredients.push({ ingredient: null, measure: null });
+      this.recipe_in_progress.ingredients.push({ ingredient: null, measure: null } );
     }
-    this.validateForm();
   }
 
   addInstructionPressed(): void {
     if (!this.recipe_in_progress.instructions) {
-      this.recipe_in_progress.instructions = [{ instruction: null, photo: null }];
+      this.recipe_in_progress.instructions = [ { instruction: null, photo: null } ];
+      this.instruction_photos_for_viewing = [];
+      this.instruction_photos_for_upload = [];
     } else {
-      this.recipe_in_progress.instructions.push({ instruction: null, photo: null });
+      this.recipe_in_progress.instructions.push({ instruction: null, photo: null } );
+      this.instruction_photos_for_viewing.push(null);
+      this.instruction_photos_for_upload.push(null);
     }
-    this.validateForm();
   }
 
   removeIngredientAtIndex(index): void {
     this.recipe_in_progress.ingredients.splice(index, 1);
-    this.validateForm();
   }
 
   removeInstructionAtIndex(index): void {
     this.recipe_in_progress.instructions.splice(index, 1);
-    this.validateForm();
+    this.instruction_photos_for_viewing.splice(index, 1);
+    this.instruction_photos_for_upload.splice(index, 1);
   }
 
   addRecipeClicked(): void {
-    this.recipe_service.addNewRecipe(this.recipe_in_progress)
-      .then((recipe) => {
-        this.router.navigate(['recipes', recipe.id]);
-      });
+    this.recipe_service.addNewRecipe(this.recipe_in_progress, {
+      cover_photo: this.cover_photo_for_upload,
+      instruction_photos: this.instruction_photos_for_upload
+    })
+        .then((recipe) => {
+          this.router.navigate(['recipes', recipe.id]);
+        });
   }
 
+  readUrl(event): void {
+    if (event.target.files && event.target.files[0]) {
+      const reader = new FileReader();
 
-  validateForm(): void {
-    this.disable_add_recipe_button = true;
-    if (!this.recipe_in_progress.title || this.recipe_in_progress.title.length < 1) {
-      return;
+      reader.onload = (rdr) => {
+        this.cover_photo_for_viewing = reader.result as string;
+      };
+
+      reader.readAsDataURL(event.target.files[0]);
+      this.cover_photo_for_upload = event.target.files[0];
     }
-    if (!this.recipe_in_progress.description || this.recipe_in_progress.description.length < 1) {
-      return;
-    }
-    const feeds = parseInt('' + this.recipe_in_progress.feeds_this_many, 10);
-    if (isNaN(feeds) || feeds < 1 || feeds > 1000) {
-      return;
-    }
-    const preptime = parseInt('' + this.recipe_in_progress.preparation_time, 10);
-    if (isNaN(preptime) || preptime < 1) {
-      return;
-    }
-    for (const ingr of this.recipe_in_progress.ingredients) {
-      if (!ingr.ingredient || ingr.ingredient.length < 1) {
-        return;
-      }
-      if (!ingr.measure || ingr.measure.length < 1) {
-        return;
-      }
-    }
-    for (const instr of this.recipe_in_progress.instructions) {
-      if (!instr.instruction || instr.instruction.length < 1) {
-        return;
-      }
-    }
-    this.disable_add_recipe_button = false;
-    console.log(this.disable_add_recipe_button);
   }
 
+  readInstUrl(i: number, event): void {
+    if (event.target.files && event.target.files[0]) {
+      const reader = new FileReader();
 
+      reader.onload = (rdr) => {
+        this.instruction_photos_for_viewing[i] = reader.result as string;
+      };
+
+      reader.readAsDataURL(event.target.files[0]);
+      this.instruction_photos_for_upload[i] = event.target.files[0];
+    }
+  }
 }

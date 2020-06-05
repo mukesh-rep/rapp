@@ -4,7 +4,7 @@
     </div>
     <div class="card-body">
         <div class='cover-photo-holder'>
-            <img src="{{ recipe.cover_photo ? recipe.cover_photo : '/assets/emptyBowl.jpg' }}" />
+            <img [src]="imageUrl(recipe.cover_photo, '/assets/emptyBowl.jpg')" />
         </div>
         <p>{{ recipe.description }}</p>
         <div>

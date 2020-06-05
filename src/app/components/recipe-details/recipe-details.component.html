@@ -16,7 +16,7 @@
     </div>
     <div class="panel-body">
         <div class='cover-photo-holder'>
-            <img src="{{ recipe.cover_photo ? recipe.cover_photo : '/assets/emptybowl.jpg' }}" />
+            <img [src]="imageUrl(recipe.cover_photo, '/assets/emptybowl.jpg')" />
         </div>
         <p>{{ recipe.description }}</p>
         <div>
@@ -39,7 +39,9 @@
             <h4> Instructions </h4>
             <ol>
                 <li *ngFor="let instruction of recipe.instructions">
-                    {{ instruction.instruction }}
+                    <img *ngIf="instruction.photo" [src]="imageUrl(instruction.photo)" border='0'/>
+                    <div style="clear: both"></div>
+                    <div >{{ instruction.instruction }}</div>
                 </li>
             </ol>
         </div>

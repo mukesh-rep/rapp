@@ -1,6 +1,7 @@
 import { Component, Input, EventEmitter, Output } from '@angular/core';
 
 import { Recipe } from '../../model/recipe';
+import { RecipeService } from '../../services/recipe.service';
 
 @Component({
   selector: 'app-recipe-summary',
@@ -19,4 +20,12 @@ export class RecipeSummaryComponent  {
   userClicked() {
     this.userClick.emit(this.recipe.id);
   }
+
+  imageUrl(img: string, defimg?: string): string {
+    if (!img && defimg) {
+      return defimg;
+    }
+    return RecipeService.imageUrl(img);
+  }
+
 }

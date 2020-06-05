@@ -2,6 +2,7 @@ div.cover-photo-holder img {
     width: 300px;
     height: 300px;
     margin: 5px;
+    object-fit: cover;
 }
 
 div.newrecipe {
@@ -25,19 +26,40 @@ div.ingredient a, div.instruction a {
 }
 
 div.instruction input.form-control {
-    width: 60%;
+    width: 50%;
     display: inline;
 }
 div.instruction {
     margin-bottom: 7px;
 }
 
+div.instruction img {
+    float: right;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
 div.add-ingredient input, div.add-instruction input {
     width: 50px;
 }
 
+input[type=button].btn {
+    background-color: #428bca;
+    color: white;
+}
+
 @media (min-width: 850px) {
-    div.cover-photo-holder img {
+    div.cover-photo-holder {
         float: right;
     }        
+}
+
+input.ng-valid, textarea.ng-valid {
+    border-left: 5px solid #42a948;
+}
+
+input.ng-invalid, textarea.ng-invalid {
+    border-left: 5px solid #a94442;
 }

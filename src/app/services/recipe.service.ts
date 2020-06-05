@@ -13,6 +13,10 @@ export class RecipeService {
   constructor(private http: HttpClient) {
   }
 
+  public static imageUrl(img: string): string {
+    return `${RECIPE_SERVER}/images/${img}`;
+  }
+
   getAllRecipes(): Promise<Recipe []> {
     return this.http
         .get<RecipesPayload>(RECIPE_SERVER + '/v1/recipes.json')
@@ -29,11 +33,37 @@ export class RecipeService {
         .catch(this.handleError);
   }
 
-  addNewRecipe(recipe: Recipe): Promise<Recipe> {
+   // First, upload the recipe.
+  // Second, upload the images.
+  //
+  // cover_photo:
+  // preparation_photos_???
+  addNewRecipe(recipe: Recipe, files: {}): Promise<Recipe> {
     return this.http
-        .put<RecipePayload>(RECIPE_SERVER + '/v1/recipes.json', recipe)
+        .put(RECIPE_SERVER + '/v1/recipes.json', recipe)
         .toPromise()
-        .then(response => response.data as Recipe)
+        .then((response) => {
+          const final_recipe: Recipe = response.data as Recipe;
+          const formData: FormData = new FormData();
+
+          if (files['cover_photo']) {
+            const file: File = files['cover_photo'];
+            formData.append('cover_photo', file, file.name);
+          }
+          if (files['instruction_photos']) {
+            for (let i = 0; i < files['instruction_photos'].length; i++) {
+              if (files['instruction_photos'][i]) {
+                const file: File = files['instruction_photos'][i];
+                formData.append('preparation_photos_' + i, file, file.name);
+              }
+            }
+          }
+
+          return this.http.post(RECIPE_SERVER + `/v1/recipes/${final_recipe.id}/images`, formData)
+              .toPromise()
+              .then(image_response => final_recipe)
+              .catch(this.handleError);
+        })
         .catch(this.handleError);
   }
 
